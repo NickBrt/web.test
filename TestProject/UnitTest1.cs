@@ -14,7 +14,7 @@ namespace TestProject
 
         [Test]
         public void PositiveTest()
-       {
+        {
             var options = new ChromeOptions
             {
                 UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
@@ -39,7 +39,7 @@ namespace TestProject
         }
 
         [Test]
-        public void IncorrectPasswordTest()
+        public void IncorrectLoginTest()
         {
             var options = new ChromeOptions
             {
@@ -63,7 +63,35 @@ namespace TestProject
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("Incorrect password!", ActualErrorMessage);
             driver.Quit();
-        //ex: появится сообщение об ошибке
+            //ex: появится сообщение об ошибке
+        }
+
+        [Test]
+        public void IncorrectPasswordTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //            1.Открыть localhost: 5001
+            driver.Url = "https://localhost:5001";
+            //2.Введите логин test
+            IWebElement loginField = driver.FindElement(By.Id("login"));
+            loginField.SendKeys("test");
+            //3.Введите неправильный пароль newyork
+            IWebElement passwordField = driver.FindElement(By.Id("password"));
+            passwordField.SendKeys("newyork");
+            //4.Нажмите логин
+            IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
+            loginButton.Click();
+            Thread.Sleep(2000);
+            IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
+            string ActualErrorMessage = errorMessage.Text;
+            Assert.AreEqual("Incorrect password!", ActualErrorMessage);
+            driver.Quit();
+            //ex.появится сообщение об ошибке, IncorrectPassword!
         }
     }
 }
