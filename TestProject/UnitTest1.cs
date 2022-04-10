@@ -93,5 +93,55 @@ namespace TestProject
             driver.Quit();
             //ex.появится сообщение об ошибке, IncorrectPassword!
         }
+
+        [Test]
+        public void BlankLoginFieldTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //            1.Открыть localhost: 5001
+            driver.Url = "https://localhost:5001/";
+            //2.Введите пароль newyork1
+            IWebElement passwordField = driver.FindElement(By.Id("password"));
+            passwordField.SendKeys("newyork1");
+            //3.Нажмите логин
+            IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
+            loginButton.Click();
+            Thread.Sleep(2000);
+            IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
+            string ActualErrorMessage = errorMessage.Text;
+            Assert.AreEqual("Incorrect user name!", ActualErrorMessage);
+            driver.Quit();
+            //ex: появится сообщение об ошибке, Incorrect user name!
+        }
+
+        [Test]
+        public void BlankPasswordFieldTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //            1.Открыть localhost: 5001
+            driver.Url = "https://localhost:5001/";
+            //2.Введите логин test
+            IWebElement loginField = driver.FindElement(By.Id("login"));
+            loginField.SendKeys("test");
+            //3.Нажмите логин
+            IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
+            loginButton.Click();
+            Thread.Sleep(2000);
+            IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
+            string ActualErrorMessage = errorMessage.Text;
+            Assert.AreEqual("Incorrect password!", ActualErrorMessage);
+            driver.Quit();
+            //ex.появится сообщение об ошибке, Incorrect Password!
+        }
     }
 }
