@@ -143,5 +143,54 @@ namespace TestProject
             driver.Quit();
             //ex.появится сообщение об ошибке, Incorrect Password!
         }
+
+        [Test]
+        public void BlankFieldsTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //            1.Открыть localhost: 5001
+            driver.Url = "https://localhost:5001/";
+            //2.Нажмите логин
+            IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
+            loginButton.Click();
+            Thread.Sleep(2000);
+            IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
+            string ActualErrorMessage = errorMessage.Text;
+            Assert.AreEqual("User not found!", ActualErrorMessage);
+            driver.Quit();
+            //ex: появится сообщение об ошибке, User not found!
+        }
+
+        [Test]
+        public void LogOutTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //Открыть localhost5001
+            driver.Url = "https://localhost:5001";
+            //2.Введите логин test
+            IWebElement loginField = driver.FindElement(By.Id("login"));
+            loginField.SendKeys("test");
+            //3.Введите пароль newyork1
+            IWebElement passwordField = driver.FindElement(By.Id("password"));
+            passwordField.SendKeys("newyork1");
+            //4.Нажмите логин
+            IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
+            loginButton.Click();
+            driver.Url = "https://localhost:5001";
+            Thread.Sleep(2000);
+            Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
+            driver.Quit();
+            //ех: юрл изменился
+        }
     }
 }
