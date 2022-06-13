@@ -7,22 +7,31 @@ namespace TestProject
 {
     public class Tests
     {
+        IWebDriver driver;
+
         [SetUp]
         public void Setup()
-        {
-        }
-
-        [Test]
-        public void PositiveTest()
         {
             var options = new ChromeOptions
             {
                 UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
                 AcceptInsecureCertificates = true
             };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost5001
+             driver = new ChromeDriver(options);
+            //Открыть localhost5001
             driver.Url = "https://localhost:5001";
+        }
+
+        [TearDown]
+        public void CloseDriver()
+        {
+            driver.Quit();
+        }
+
+        [Test]
+        public void PositiveTest()
+        {
+            
             //2.Введите логин test
             IWebElement loginField = driver.FindElement(By.Id("login"));
             loginField.SendKeys("test");
@@ -35,20 +44,13 @@ namespace TestProject
             Thread.Sleep(2000);
             //ех: юрл изменился
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
-            driver.Quit();
+           
         }
 
         [Test]
         public void IncorrectLoginTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost: 5001
-            driver.Url = "https://localhost:5001";
+            
             //2.Введите неправильный логин User
             IWebElement loginField = driver.FindElement(By.Id("login"));
             loginField.SendKeys("User");
@@ -62,21 +64,14 @@ namespace TestProject
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("Incorrect password!", ActualErrorMessage);
-            driver.Quit();
+            
             //ex: появится сообщение об ошибке
         }
 
         [Test]
         public void IncorrectPasswordTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost: 5001
-            driver.Url = "https://localhost:5001";
+           
             //2.Введите логин test
             IWebElement loginField = driver.FindElement(By.Id("login"));
             loginField.SendKeys("test");
@@ -90,21 +85,14 @@ namespace TestProject
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("Incorrect password!", ActualErrorMessage);
-            driver.Quit();
+            
             //ex.появится сообщение об ошибке, IncorrectPassword!
         }
 
         [Test]
         public void BlankLoginFieldTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost: 5001
-            driver.Url = "https://localhost:5001/";
+            
             //2.Введите пароль newyork1
             IWebElement passwordField = driver.FindElement(By.Id("password"));
             passwordField.SendKeys("newyork1");
@@ -115,21 +103,14 @@ namespace TestProject
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("Incorrect user name!", ActualErrorMessage);
-            driver.Quit();
+           
             //ex: появится сообщение об ошибке, Incorrect user name!
         }
 
         [Test]
         public void BlankPasswordFieldTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost: 5001
-            driver.Url = "https://localhost:5001/";
+            
             //2.Введите логин test
             IWebElement loginField = driver.FindElement(By.Id("login"));
             loginField.SendKeys("test");
@@ -140,21 +121,13 @@ namespace TestProject
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("Incorrect password!", ActualErrorMessage);
-            driver.Quit();
             //ex.появится сообщение об ошибке, Incorrect Password!
         }
 
         [Test]
         public void BlankFieldsTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //            1.Открыть localhost: 5001
-            driver.Url = "https://localhost:5001/";
+            
             //2.Нажмите логин
             IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
             loginButton.Click();
@@ -162,21 +135,13 @@ namespace TestProject
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual("User not found!", ActualErrorMessage);
-            driver.Quit();
             //ex: появится сообщение об ошибке, User not found!
         }
 
         [Test]
         public void LogOutTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //Открыть localhost5001
-            driver.Url = "https://localhost:5001";
+           
             //2.Введите логин test
             IWebElement loginField = driver.FindElement(By.Id("login"));
             loginField.SendKeys("test");
@@ -189,7 +154,6 @@ namespace TestProject
             driver.Url = "https://localhost:5001";
             Thread.Sleep(2000);
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
-            driver.Quit();
             //ех: пользователь залогинен
         }
 
@@ -197,17 +161,9 @@ namespace TestProject
         [Test]
         public void PaswordTest()
         {
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            IWebDriver driver = new ChromeDriver(options);
-            //Открыть localhost5001
-            driver.Url = "https://localhost:5001";
+            
             IWebElement passwordLabel = driver.FindElement(By.ClassName("pass"));
             Assert.AreEqual("Password:", passwordLabel.Text);
-            driver.Quit();
         }
     }
 }
