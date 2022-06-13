@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace TestProject
 {
-    public class Tests
+    public class LoginPageTests
     {
         IWebDriver driver;
 
