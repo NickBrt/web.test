@@ -192,5 +192,22 @@ namespace TestProject
             driver.Quit();
             //ех: пользователь залогинен
         }
+
+
+        [Test]
+        public void PaswordTest()
+        {
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            IWebDriver driver = new ChromeDriver(options);
+            //Открыть localhost5001
+            driver.Url = "https://localhost:5001";
+            IWebElement passwordLabel = driver.FindElement(By.ClassName("pass"));
+            Assert.AreEqual("Password:", passwordLabel.Text);
+            driver.Quit();
+        }
     }
 }
