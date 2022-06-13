@@ -190,7 +190,7 @@ namespace TestProject
             Thread.Sleep(2000);
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
             driver.Quit();
-            //ех: юрл изменился
+            //ех: пользователь залогинен
         }
     }
 }
