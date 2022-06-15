@@ -24,3 +24,11 @@ Login = function () {
 ShowError = function (error) {
   document.getElementById('errorMessage').textContent = error;
 }
+
+addButtons = function() {
+    setTimeout(function() {
+            var button = '<button type="button" class="btn btn-sm btn-success" onclick="Login()" title="Login" id="loginBtn">Login</button>';
+            document.getElementById('buttons').innerHTML += button;
+        },
+        2000);
+};
