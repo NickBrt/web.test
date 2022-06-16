@@ -1,7 +1,9 @@
-using System.Threading;
+using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace TestProject
 {
@@ -18,6 +20,8 @@ namespace TestProject
                 AcceptInsecureCertificates = true
             };
              driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             //Открыть localhost5001
             driver.Url = "https://localhost:5001";
         }
@@ -40,8 +44,9 @@ namespace TestProject
             loginButton.Click();
             //3.Введите пароль нбпбо
             //4.Нажмите логин
-            Thread.Sleep(2000);
             //ех: юрл изменился
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(ExpectedConditions.UrlContains("Calculator"));
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
         }
 
@@ -61,8 +66,10 @@ namespace TestProject
             //4.Нажмите логин
             IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
             loginButton.Click();
-            Thread.Sleep(2000);
             IWebElement errorMessage = driver.FindElement(By.Id("errorMessage"));
+
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(ExpectedConditions.TextToBePresentInElement(errorMessage, expectedError));
             string ActualErrorMessage = errorMessage.Text;
             Assert.AreEqual(expectedError, ActualErrorMessage);
             //ex: появится сообщение об ошибке
@@ -81,7 +88,8 @@ namespace TestProject
             IWebElement loginButton = driver.FindElement(By.Id("loginBtn"));
             loginButton.Click();
             driver.Url = "https://localhost:5001";
-            Thread.Sleep(2000);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(ExpectedConditions.UrlContains("Calculator"));
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
             //ех: пользователь залогинен
         }
