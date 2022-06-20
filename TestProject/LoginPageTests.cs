@@ -93,12 +93,5 @@ namespace TestProject
             Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
             //ех: пользователь залогинен
         }
-
-        [Test]
-        public void PaswordTest()
-        {
-            IWebElement passwordLabel = driver.FindElement(By.ClassName("pass"));
-            Assert.AreEqual("Password:", passwordLabel.Text);
-        }
     }
 }
