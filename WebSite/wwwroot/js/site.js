@@ -62,14 +62,22 @@ function Logout() {
 function verifyLoggedIn() {
     var baseUrl = getBaseUrl();
     var name = getCookie('login');
-    var noLogin = [
+    //var noLogin = [
+    //    baseUrl,
+    //    baseUrl + '/',
+    //    baseUrl + '/Register'
+    //];
+    var login = [
         baseUrl,
-        baseUrl + '/',
-        baseUrl + '/Register'
+        baseUrl + '/'
     ];
 
-    if (!name && !noLogin.includes(window.location.href)) {
-        Logout();
+    //if (!name && !noLogin.includes(window.location.href)) {
+    //    Logout();
+    //}
+
+    if (!!name && login.includes(window.location.href)) {
+        Calculator();
     }
 }
 
@@ -115,4 +123,4 @@ async function SetDropdownSelectedValue(id, value) {
     }
 }
 
-// verifyLoggedIn();
+verifyLoggedIn();
