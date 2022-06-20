@@ -36,11 +36,11 @@ namespace TestProject
         public void PositiveTest()
         {
             //2.Введите логин test
-            IWebElement loginField = driver.FindElement(By.XPath //*[@id='login']);
+            IWebElement loginField = driver.FindElement(By.XPath("//th[text() = 'Login:']/..//input"));
             loginField.SendKeys("test");
-            IWebElement passwordField = driver.FindElement(By.XPath //*[@id='password']);
+            IWebElement passwordField = driver.FindElement(By.XPath("//*[@id='password']"));
             passwordField.SendKeys("newyork1");
-            IWebElement loginButton = driver.FindElement(By.XPath //*[@id="loginBtn"]);
+            IWebElement loginButton = driver.FindElement(By.XPath("//*[@id='loginBtn']"));
             loginButton.Click();
             //3.Введите пароль newyork1
             //4.Нажмите логин
